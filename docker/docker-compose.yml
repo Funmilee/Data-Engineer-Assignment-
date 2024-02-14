@@ -1,4 +1,6 @@
 services:
+
+
   airflow:
     build:
       context: .
@@ -29,13 +31,13 @@ services:
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
       AIRFLOW__CORE__SQL_ALCHEMY_CONN: sqlite:////airflow/airflow.db
     volumes:
-        - ${PWD}/dags:/airflow/dags
+        - ./dags:/airflow/dags
         - airflow-data:/airflow
     env_file:
         - .env
     restart: always
     networks:
-            - ghost
+            - funmi_connect
 
 
   # Jupyter notebook
@@ -44,14 +46,15 @@ services:
         container_name: jupyter_container
         image: 'jupyter/pyspark-notebook:spark-3.2.0'
         networks:
-            - ghost
+            - funmi_connect
         ports:
           - "8888:8888"
         volumes:
-          - ./notebooks:/home/jovyan/work/notebooks/
+          - ${PWD}/docker/notebooks:/home/jovyan/work/notebooks/
           - airflow-data:/home/jovyan/airflow
         restart: always
           
+
 
 
 
@@ -64,5 +67,5 @@ volumes:
 
 # Network Bridge Connection
 networks:
-  ghost:
+  funmi_connect:
     driver: bridge

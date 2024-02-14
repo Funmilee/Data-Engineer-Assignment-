@@ -21,7 +21,7 @@ default_args = {
 dag = DAG(
     'clickhouse_to_sqlite_dag', default_args=default_args, schedule_interval=None)
 
-def execute_query():
+def execute_query(): # function 1 
     host = 'github.demo.altinity.cloud'
     user = 'demo'
     password = 'demo'
