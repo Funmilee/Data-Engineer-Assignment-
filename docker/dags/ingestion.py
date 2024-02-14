@@ -60,12 +60,11 @@ def insert_sqlite_hook(**context):
     sqlite_hook = SqliteHook()
     ti = context['ti']
     results = ti.xcom_pull(task_ids="execute_query")
-    #target_fields = ['month', 'sat_mean_trip_count', 'sat_mean_fare_per_trip', 'sat_mean_duration_per_trip', 'sun_mean_trip_count', 'sun_mean_fare_per_trip', 'sun_mean_duration_per_trip']
-    #sqlite_hook.insert_rows(table='trip_metrics', rows=results, target_fields=target_fields)
-    column_names = ['month', 'sat_mean_trip_count', 'sat_mean_fare_per_trip', 'sat_mean_duration_per_trip', 'sun_mean_trip_count', 'sun_mean_fare_per_trip', 'sun_mean_duration_per_trip']
-    # Combine column names and results into dictionaries
-    rows = [dict(zip(column_names, row)) for row in results]
-    # Insert the data into SQLite database
-    sqlite_hook.insert_rows(table='trip_metrics', rows=rows, target_fields=column_names)
+    target_fields = ['month', 'sat_mean_trip_count', 'sat_mean_fare_per_trip', 'sat_mean_duration_per_trip', 'sun_mean_trip_count', 'sun_mean_fare_per_trip', 'sun_mean_duration_per_trip']
+    sqlite_hook.insert_rows(table='trip_metrics', rows=results, target_fields=target_fields)
 
-execute_query_task >> create_table_sqlite_task >> insert_sqlite_hook()
+
+
+
+execute_query_task >> create_table_sqlite_task >> insert_sqlite_hook() 
+
